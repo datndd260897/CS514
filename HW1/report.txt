@@ -46,6 +46,10 @@
    * insert(t, x): average O(log(n)), worst-case O(n)
 
 
+Debriefing (required!): --------------------------
+
+0. What's your name?
+    Dinh Duc Dat Nguyen
 1. Approximately how many hours did you spend on this assignment?
    - 8 hours
 2. Would you rate it as easy, moderate, or difficult?
