@@ -1,12 +1,13 @@
 import random
 
-def qselect(k, a):
+def qselect(a, k):
     """
     Quick selection algorithm.
     :param k: kth-smallest number in the array.
     :param a: arbitrary array
     :return:
     """
+
     i = random.randrange(len(a))
     a[0], a[i] = a[i], a[0]
     pivot = a[0]
