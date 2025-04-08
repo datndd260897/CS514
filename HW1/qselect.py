@@ -1,6 +1,6 @@
 import random
 
-def qselect(a, k):
+def qselect(k, a):
     """
     Quick selection algorithm.
     :param k: kth-smallest number in the array.
