@@ -1,0 +1,60 @@
+
+1. (1) State the best-case, worst-case, and average-case time complexities of quicksort.
+   - Best-case: O(nlog(n))
+   - Worst-case: O(n^2)
+
+   (2) Derive the best-case and worst-case complexities (average-case analysis is optional).
+
+   Best-case:
+   - The pivot always splits the array exactly in half.
+   - Partitioning takes O(n) time (comparing elements to pivot).
+   => Recurrent relation: T(n) = 2T(n/2) + O(n). Base on Master Theorem case 2:
+   => T(n) = O(nlog(n))
+
+    Worst-case:
+    - The pivot is always the smallest or largest element in the array (e.g., already sorted or inversely sorted)
+    - Partitioning takes O(n) time (comparing elements to pivot).
+    => Recurrent relation: T(n) = T(n - 1) + O(n) = O(n) + O(n - 1) + ... + O(1)
+    => T(n) =  O(n^2)
+
+    Average-case:
+    - The pivot splits the array into i elements on the left and n - i - 1 on the right
+    - Partitioning takes O(n) time (comparing elements to pivot)
+    => Recurrent relation: T(n) = 2T(n/2) + O(n). Base on Master Theorem case 2:
+    => T(n) = O(nlog(n))
+
+2.  What are the best-case, worst-case, and average-case time complexities?
+    Derive the best and worst cases.
+
+    Best-case:
+    - The pivot always splits the array exactly in half.
+    => Recurrent relation: T(n) = T(n/2) + O(n)
+    => T(n) = O(n)
+
+    Worst-case:
+    - The pivot is always the smallest or largest element in the array (e.g., already sorted or inversely sorted)
+    => Recurrent relation: T(n) = T(n - 1) + O(n)
+    => T(n) = O(n^2)
+
+    Average-case:
+    - The pivot splits the array into i elements on the left and n - i - 1 on the right
+    => Recurrent relation: T(n) = T(n/2) + O(n)
+    => T(n) = O(n)
+
+3. * sorted(t): average: O(n), worst-case : O(n)
+   * search(t, x): average O(log(n)), worst-case: O(n)
+   * insert(t, x): average O(log(n)), worst-case O(n)
+
+
+1. Approximately how many hours did you spend on this assignment?
+   - 8 hours
+2. Would you rate it as easy, moderate, or difficult?
+   - moderate
+3. Did you work on it mostly alone, or mostly with other people?
+   Note you are encouraged to discuss with your classmates,
+   but each students should write his/her own code & analysis.
+   - Alone
+4. How deeply do you feel you understand the material it covers (0%-100%)?
+   - 90%
+5. Any other comments?
+   - Useful topics
