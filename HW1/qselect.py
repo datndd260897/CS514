@@ -14,7 +14,7 @@ def qselect(k, a):
     left = [x for x in a if x < pivot]
     remaining = k - len(left) - 1 # 1 is for pivot
     if remaining <= 0: # cases 1-2: no need to do right!
-        return pivot if remaining == 0 else qselect(left, k)
+        return pivot if remaining == 0 else qselect(k, left)
     right = [x for x in a[1:] if x >= pivot]
     return qselect(remaining, right) # case 3
 
