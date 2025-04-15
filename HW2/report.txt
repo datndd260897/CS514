@@ -1,0 +1,24 @@
+def depth(t):
+    return 0 if t == [] else max(depth(t[0]), depth(t[2]))+1
+
+    Complexity => O(n)
+
+def longest(t):
+    return 0 if t == [] else max(longest(t[0]), longest(t[2]), depth(t[0])+depth(t[2]))
+
+    Complexity => O(n^2)
+
+Debriefing (required!): --------------------------
+
+1. Approximately how many hours did you spend on this assignment?
+    2
+2. Would you rate it as easy, moderate, or difficult?
+    moderate
+3. Did you work on it mostly alone, or mostly with other people?
+   Note you are encouraged to discuss with your classmates,
+   but each students should submit his/her own code.
+   Alone
+4. How deeply do you feel you understand the material it covers (0%-100%)?
+    90%
+5. Any other comments?
+    No
