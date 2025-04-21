@@ -1,0 +1,31 @@
+0. Summarize the time complexities of the basic operations (push, pop-min, peek, build) for these implementations of priority queue:
+
+(a) unsorted array
+- push:
+- pop-min:
+- peek:
+- build:
+
+(b) sorted array (highest priority first; i.e., "most urgent patient first")
+- push:
+- pop-min:
+- peek:
+- build:
+
+(c) reversely sorted array (lowest priority first)
+- push:
+- pop-min:
+- peek:
+- build:
+
+(d) sorted linked list (highest priority first)
+- push:
+- pop-min:
+- peek:
+- build:
+
+(e) binary heap
+- push:
+- pop-min:
+- peek:
+- build:
