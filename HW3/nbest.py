@@ -69,7 +69,7 @@ def nbestc(A, B):
 a = [4, 1, 5, 3]
 b = [2, 6, 3, 4]
 
-nbestc = nbesta
+nbestc = nbestb
 
 print("Algorithm (a) Result:", nbesta(a, b))
 print("Algorithm (b) Result:", nbestb(a, b))
