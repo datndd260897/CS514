@@ -16,19 +16,19 @@
 - push: O(n)
 - pop-min: O(1)
 - peek: O(1)
-- build: O(1)
+- build: O(nlog(n))
 
 (d) sorted linked list (highest priority first)
 - push: O(n)
 - pop-min: O(1)
 - peek: O(1)
-- build: O(nlog(n))
+- build: O(n^2)
 
 (e) binary heap
 - push: O(log(n))
-- pop-min: O(1)
+- pop-min: O(log(n))
 - peek: O(1)
-- build: O(1)
+- build: O(n)
 
 1. There are two methods for building a heap from an unsorted array:
     (1) insert each element into the heap  --- O(nlogn) -- n x heapq.heappush()
