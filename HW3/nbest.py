@@ -44,29 +44,33 @@ def nbestb(A, B):
 
 
 
-# Algorithm (c) - Best-First (Baby Dijkstra)
+
 def nbestc(A, B):
-    # Initialize the heap with the first element
-    heap = []
-    heapq.heappush(heap, (A[0] + B[0], 0, 0))  # (sum, index in A, index in B)
+    # Sort both lists to ensure we always work with the smallest available values
+    A.sort()
+    B.sort()
+
+    # Initialize the priority queue with the smallest pair (A[0], B[0])
+    pq = []
+    heapq.heappush(pq, (A[0] + B[0], B[0], 0, 0))  # (sum, index in A, index in B)
+
+    # Keep track of the pairs we've already considered to avoid duplicates
+    visited = set((0, 0))
 
     result = []
-    seen = set()  # To track visited index pairs
-    seen.add((0, 0))  # We start from (0, 0)
 
-    while len(result) < len(A):
-        _, i, j = heapq.heappop(heap)  # Pop the smallest element from the heap
-        result.append((A[i], B[j]))  # Add the pair to the result
+    while len(result) < len(A):  # We need exactly n pairs
+        sum_val, y_val, i, j = heapq.heappop(pq)
+        result.append((A[i], B[j]))
 
-        # Move to the next element in the current row if possible
-        if i + 1 < len(A) and (i + 1, j) not in seen:
-            heapq.heappush(heap, (A[i + 1] + B[j], i + 1, j))
-            seen.add((i + 1, j))
+        # Expand by adding the next pair in the row (i+1, j) and column (i, j+1)
+        if i + 1 < len(A) and (i + 1, j) not in visited:
+            heapq.heappush(pq, (A[i + 1] + B[j], B[j], i + 1, j))
+            visited.add((i + 1, j))
 
-        # Move to the next element in the current column if possible
-        if j + 1 < len(B) and (i, j + 1) not in seen:
-            heapq.heappush(heap, (A[i] + B[j + 1], i, j + 1))
-            seen.add((i, j + 1))
+        if j + 1 < len(B) and (i, j + 1) not in visited:
+            heapq.heappush(pq, (A[i] + B[j + 1], B[j + 1], i, j + 1))
+            visited.add((i, j + 1))
 
     return result
 
