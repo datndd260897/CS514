@@ -46,6 +46,8 @@ def nbestb(A, B):
 
 
 def nbestc(A, B):
+    if not A or not B:
+        return []
     # Sort both lists to ensure we always work with the smallest available values
     A.sort()
     B.sort()
