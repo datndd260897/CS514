@@ -1,31 +1,88 @@
 0. Summarize the time complexities of the basic operations (push, pop-min, peek, build) for these implementations of priority queue:
 
 (a) unsorted array
-- push:
-- pop-min:
-- peek:
-- build:
+- push: O(1)
+- pop-min: O(n)
+- peek: O(n)
+- build: O(n)
 
 (b) sorted array (highest priority first; i.e., "most urgent patient first")
-- push:
-- pop-min:
-- peek:
-- build:
+- push: O(n)
+- pop-min: O(1)
+- peek: O(1)
+- build: O(nlog(n))
 
 (c) reversely sorted array (lowest priority first)
-- push:
-- pop-min:
-- peek:
-- build:
+- push: O(n)
+- pop-min: O(1)
+- peek: O(1)
+- build: O(1)
 
 (d) sorted linked list (highest priority first)
-- push:
-- pop-min:
-- peek:
-- build:
+- push: O(n)
+- pop-min: O(1)
+- peek: O(1)
+- build: O(nlog(n))
 
 (e) binary heap
-- push:
-- pop-min:
-- peek:
-- build:
+- push: O(log(n))
+- pop-min: O(1)
+- peek: O(1)
+- build: O(1)
+
+1. There are two methods for building a heap from an unsorted array:
+    (1) insert each element into the heap  --- O(nlogn) -- n x heapq.heappush()
+    (2) heapify                            --- O(n)     -- heapq.heapify()
+
+    Derive these time complexities.
+    (1)
+    - Each heappush() operation involves inserting an element at the end of the heap and then potentially "bubbling it up" to restore the heap property.
+    - In the worst case, an element might need to be compared and moved up to the root, which takes O(log n) time for each insertion.
+    - Since we perform this operation for n elements, the total time complexity is the sum of the time complexities for each insertion
+    => O(nlog(n))
+    (2)
+    - Leaf nodes (half of the nodes) have a height of 0 and require no work.
+    - Nodes at height 1 require at most one swap.
+    - Nodes at height 2 require at most two swaps, and so on.
+    - The root (height log n) requires the most work (O(log n)).
+
+2. Q: What is the complexity?
+    O(nlog(k))
+
+
+3.
+    Q1: What are the time complexities of these algorithms?
+    nbesta: O(n^2 * log(n))
+    nbestb: O(n^2)
+    nbestc: O(nlog(n))
+    Q2: If you use nbesta for nbestc, how many test cases can you pass?
+    7/10
+    What about nbestb?
+    2/10
+
+4.
+    Q: What is your complexity?
+    O(nlog(k))
+
+
+
+Debriefing (required!): --------------------------
+
+0. What's your name?
+    Dat Nguyen
+1. Approximately how many hours did you spend on this assignment?
+    24
+2. Would you rate it as easy, moderate, or difficult?
+    difficult
+3. Did you work on it mostly alone, or mostly with other people?
+   Note you are encouraged to discuss with your classmates,
+   but each students should submit his/her own code.
+   alone
+4. How deeply do you feel you understand the material it covers (0%-100%)?
+    90%
+5. Take a moment to reflect on your quiz 1 performance.
+   For the problems you got wrong, do you know the correct answers now?
+   What would you do to score better in quiz 2 and midterm?
+   Study harder
+6. Any comments on the Course Notes so far?
+    No
