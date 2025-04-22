@@ -36,32 +36,34 @@ def quickselect(arr, k, compare_fn):
 
 
 def nbestb(A, B):
+    def _compare_function(x, y):
+        return (x[0] + x[1] < y[0] + y[1]) or (x[0] + x[1] == y[0] + y[1] and x[1] > y[1])
     pairs = [(x, y) for x in A for y in B]
     pairs.sort(key=lambda pair: (pair[0] + pair[1], pair[1]))
-    return quickselect(pairs, len(A),
-                       lambda x, y: (x[0] + x[1] < y[0] + y[1]) or (x[0] + x[1] == y[0] + y[1] and x[1] < y[1]))
+    return quickselect(pairs, len(A), _compare_function)
 
 
-# Algorithm (c) - Best-First (Baby Dijkstra)
+
 # Algorithm (c) - Best-First (Baby Dijkstra)
 def nbestc(A, B):
+    # Initialize the heap with the first element
     heap = []
-    heapq.heappush(heap, (A[0] + B[0], 0, 0))  # Start with the smallest pair (first element of A and B)
-    result = []
+    heapq.heappush(heap, (A[0] + B[0], 0, 0))  # (sum, index in A, index in B)
 
-    seen = set()
-    seen.add((0, 0))  # We keep track of the pairs we've already processed
+    result = []
+    seen = set()  # To track visited index pairs
+    seen.add((0, 0))  # We start from (0, 0)
 
     while len(result) < len(A):
-        _, i, j = heapq.heappop(heap)
-        result.append((A[i], B[j]))  # Append the actual values
+        _, i, j = heapq.heappop(heap)  # Pop the smallest element from the heap
+        result.append((A[i], B[j]))  # Add the pair to the result
 
-        # Check if the next pair in the row is valid and hasn't been seen yet
+        # Move to the next element in the current row if possible
         if i + 1 < len(A) and (i + 1, j) not in seen:
             heapq.heappush(heap, (A[i + 1] + B[j], i + 1, j))
             seen.add((i + 1, j))
 
-        # Check if the next pair in the column is valid and hasn't been seen yet
+        # Move to the next element in the current column if possible
         if j + 1 < len(B) and (i, j + 1) not in seen:
             heapq.heappush(heap, (A[i] + B[j + 1], i, j + 1))
             seen.add((i, j + 1))
