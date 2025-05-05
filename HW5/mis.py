@@ -1,4 +1,3 @@
-# Maximum Weighted Independent Set (WIS)
 def max_wis(nums):
     n = len(nums)
     if n == 0:
@@ -16,7 +15,7 @@ def max_wis(nums):
             dp[i] = dp[i - 1]
         else:
             dp[i] = dp[i - 2] + nums[i - 1]
-            chosen[i - 1] = True
+            chosen[i - 1] = True  # Mark this element as chosen
 
     # Backtrack to find the chosen elements
     selected = []
@@ -24,7 +23,7 @@ def max_wis(nums):
     while i >= 0:
         if chosen[i]:
             selected.append(nums[i])
-            i -= 2  # Skip the adjacent element
+            i -= 2  # Skip the adjacent element (because it's an independent set)
         else:
             i -= 1
 
@@ -32,7 +31,7 @@ def max_wis(nums):
 
 
 # Test cases
-print(max_wis([7, 8, 5]))  # Output: (12, [7, 5])
+print(max_wis([7, 8, 5]))  # Expected Output: (12, [7, 5])
 print(max_wis([-1, 8, 10]))  # Output: (10, [10])
 print(max_wis([]))  # Output: (0, [])
 print(max_wis([-5, -1, -4]))  # Output: (0, [])
