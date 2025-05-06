@@ -1,0 +1,34 @@
+0. (Optional) Is Fibonacci REALLY O(n)?
+   Hint: the value of f(n) itself grows exponentially.
+- O(n) when using memoization (or tabulation).
+
+1. Number of bit strings of length n that has
+- Both approaches have a time complexity of O(n), where n is the number of elements in the input list:
+    + Top-Down Approach: Memoization ensures each subproblem is solved only once, resulting in linear time complexity.
+    + Bottom-Up Approach: We fill the dp array in a single pass, and the backtracking step is also linear in time.
+
+3. Number of n-node BSTs
+Qa: What's the complexity of this DP?
+- Time complexity: O(n^2)
+- Space complexity: O(n)
+Qb: What's the name of this famous number series?
+Catalan number
+
+
+
+0. What's your name?
+- Dat Nguyen
+1. Approximately how many hours did you spend on this assignment?
+- 8 hours
+2. Would you rate it as easy, moderate, or difficult?
+- moderate
+3. Did you work on it mostly alone, or mostly with other people?
+- Alone
+4. How deeply do you feel you understand the material it covers (0%-100%)?
+- 80%
+5. Take a moment to reflect on your quiz 2 performance.
+   For the problems you got wrong, do you know the correct answers now?
+   What would you do to score better in the midterm?
+- Study harder
+6. Any other comments?
+- N/A
