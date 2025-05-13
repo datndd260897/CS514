@@ -1,0 +1,52 @@
+1. UNBOUNDED KNAPSACK
+
+(a) Greedy Solution:
+   Take items in order of value-to-weight ratio (v/w) unlimited.
+
+(b) Counterexample: W=6 and there are 3 products
+   name    i   wi   vi    vi/wi
+   apple   1   2    3.2   1.6
+   orange  2   5    9.0   1.8
+   pear    3   4    7.0   1.75
+   Greedy picks orange (5, 9.0) = weight 5, value 9.0 because it has the highest value per weight 1.8.
+   Optimal: pick apple and pear (2, 3.2) + (4, 7.0) = weight 6, value 10.2
+
+(c) DP Subproblem:
+   dp[w] = best value achievable for capacity w
+
+(d) Recurrence:
+   dp[w] = max(dp[w - w_i] + v_i) for all items i where w_i <= w
+
+(e) Base Cases:
+   dp[0] = 0
+
+(f) Time and Space Complexities:
+   Time: O(nW), Space: O(W)
+
+---
+
+2. BOUNDED KNAPSACK
+
+(a) Greedy Solution:
+   Take items in order of value-to-weight ratio (v/w), limited by available copies.
+
+(b) Counterexample:
+   name    i   wi   vi    vi/wi   copies
+   apple   1   2    3.2   1.6     1
+   orange  2   5    9.0   1.8     1
+   pear    3   4    7.0   1.75    1
+   Greedy picks orange (5, 9.0) = weight 5, value 9.0 because it has the highest value per weight 1.8.
+   Optimal: pick apple and pear (2, 3.2) + (4, 7.0) = weight 6, value 10.2
+
+(c) DP Subproblem:
+   dp[i][w] = best value using first i items and capacity w
+
+(d) Recurrence:
+   dp[i][w] = max over k in [0, min(c_i, w//w_i)] of (dp[i-1][w - k*w_i] + k*v_i)
+
+(e) Base Cases:
+   dp[0][w] = 0 for all w
+
+(f) Time and Space Complexities:
+   Time: O(nWc), where c = max copies per item
+   Space: O(nW)
