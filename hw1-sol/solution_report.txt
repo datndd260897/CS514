@@ -1,0 +1,144 @@
+HW1 - Python 3, qsort, and qselect
+Reference Solutions:
+
+0. Q: What's the best-case, worst-case, and average-case time complexities of quicksort.
+   Briefly explain each case.
+
+   A: 
+   best-case: O(n*log(n))
+   average-case: O(n*log(n))
+   worst-case: O(n^2)
+
+   Worst case example: each time the pivot we choose is the min/max one,
+   T(n) = T(n-1) + O(n) ==> T(n) = O(n^2)
+
+   Best case example: each time the pivot we choose is the median,
+   T(n) = 2T(n/2) + O(n) ==> T(n) = O(n*log(n))
+
+   Average case: T(n) = [average(T(i-1)+T(n-i)) for i=1,2..n] + O(n),
+   =(not intuitive)=> T(n) = O(n*log(n))
+   
+
+   See the full average case time complexity analysis in CLRS Chap. 7.4, 
+   or
+   https://www.cs.cmu.edu/afs/cs/academic/class/15451-s07/www/lecture_notes/lect0123.pdf
+   or
+   page 4~5 on Dr. Mount's lecture notes of UMD CMSC-351 Fall 2011:
+   http://www.cs.umd.edu/~meesh/351/mount/lectures/lec15-quicksort.pdf
+
+   Average case complexity for quicksort/quickselect is not required.
+   
+
+1. [WILL BE GRADED] 
+   Quickselect with Randomized Pivot (CLRS Ch. 9.2).
+
+   >>> from qselect import *
+   >>> qselect(2, [3, 10, 4, 7, 19])
+   4
+   >>> qselect(4, [11, 2, 8, 3])
+   11
+
+   Q: What's the best-case, worst-case, and average-case time complexities? Briefly explain.
+
+   Filename: qselect.py
+
+   A: 
+   best-case: O(n)
+   average-case: O(n)
+   worst-case: O(n^2)
+
+   Worst case: each time the pivot we choose is the min/max one
+   T(n) = T(n-1) + O(n) ==> T(n) = O(n^2)
+
+   Best case (extremely lucky): the first pivot is the element we want
+   T(n) = O(n)
+
+   Best case (in general): the pivot is near the median
+   T(n) = T(n/2) + O(n) = O(n + n/2 + n/4 + ...) = O(n)
+
+   So best case is always O(n).
+
+   Average case: T(n) = [average(T(i)) for i=1,2..n] + O(n)
+   ==> (not intuitive)=> T(n) = O(n)
+
+2. Buggy Qsort Revisited
+
+   In the slides we showed a buggy version of qsort which is weird in an interesting way:
+   it actually returns a binary search tree for the given array, rooted at the pivot:
+
+   >>> from qsort import *
+   >>> tree = sort([4,2,6,3,5,7,1,9])
+   >>> tree
+   [[[[], 1, []], 2, [[], 3, []]], 4, [[[], 5, []], 6, [[], 7, [[], 9, []]]]]
+
+   which encodes a binary search tree:
+
+                      4
+                    /   \
+                  2       6
+                 / \     / \
+                1   3   5   7
+                             \
+                              9
+   
+   Now on top of that piece of code, add three functions: 
+   * sorted(t): returns the sorted order (infix traversal)
+   * search(t, x): returns whether x is in t
+   * insert(t, x): inserts x into t (in-place) if it is missing, otherwise does nothing.
+
+   >>> sorted(tree)
+   [1, 2, 3, 4, 5, 6, 7, 9]
+   >>> search(tree, 6)
+   True
+   >>> search(tree, 6.5)
+   False
+   >>> insert(tree, 6.5)
+   >>> tree
+   [[[[], 1, []], 2, [[], 3, []]], 4, [[[], 5, []], 6, [[[], 6.5, []], 7, [[], 9, []]]]]
+   >>> insert(tree, 3)
+   >>> tree
+   [[[[], 1, []], 2, [[], 3, []]], 4, [[[], 5, []], 6, [[[], 6.5, []], 7, [[], 9, []]]]]
+
+   Hint: both search and insert should depend on a helper function _search(tree, x) which 
+   returns the subtree (a list) rooted at x when x is found, or the [] where x should 
+   be inserted.
+
+   e.g., 
+   >>> tree = sort([4,2,6,3,5,7,1,9])        # starting from the initial tree
+   >>> _search(tree, 3)
+   [[], 3, []]
+   >>> _search(tree, 0)
+   []
+   >>> _search(tree, 6.5)
+   []
+   >>> _search(tree, 0) is _search(tree, 6.5)
+   False
+   >>> _search(tree, 0) == _search(tree, 6.5)
+   True
+   
+   Note the last two []'s are different nodes (with different memory addresses): 
+   the first one is the left child of 1, while the second one is the left child of 7
+   (so that insert is very easy).
+   
+   Filename: qsort.py
+   
+   Q: What are the time complexities for the operations implemented?
+
+   A: 
+|-------------+-----------+------------|
+| function    | best-case | worst-case |
+|-------------+-----------+------------|
+| sorted(t)   |         O(n)           |
+| search(t,x) | O(1)      |    O(n)    | (could be lucky)
+| search(t,x) | O(log n)  |    O(n)    | (x not in t)      
+| insert(t,x) | O(1)      |    O(n)    | (could be lucky)
+| insert(t,x) | O(log n)  |    O(n)    | (x not in t)
+|-------------+-----------+------------+
+
+Note: in Quizzes/Exams, we will always specify conditions like "x not in t"
+      so that there is no ambiguity whether luckiness should be considered.
+      Our conditions are always that you're not lucky to finish in one step.
+
+Note: sorted(t) needs to use a local variable and subfunction to achieve O(n).
+      See sorted2(t) in qsort.py.
+      Simply sorted(left) + [root] + sorted(right) is worst-case O(n^2).

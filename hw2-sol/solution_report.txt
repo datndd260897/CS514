@@ -1,0 +1,47 @@
+Algorithms, Spring 2024
+HW2 - Divide-n-conquer: mergesort, number of inversions, longest path
+
+1. mergesort (see msort.py)
+    I wrote two versions, but v0 (though beautiful) does not have the correct runtime.
+    v0 has O(n^2) time in merging two sorted lists, so overall:
+
+    T(n) = 2T(n/2) + O(n^2) = O(n^2) --- using Master Theorem case 3 (see CLRS or wikipedia).
+
+    or you can expand it out using the Recursion Tree method:
+
+    T(n) =    n^2   -- 1st level (n^2)
+           + 2n^2/4 -- 2nd level (n^2/2)
+           + 4n^2/16 -- 3rd level (n^2/4)
+           ...
+        = n^2 (1 + 1/2 + 1/4 + ...) = O(n^2)
+
+    v1 has the correct O(n) time in merging two sorted lists, so overall:
+
+    T(n) = 2T(n/2) + O(n) = O(nlogn)
+
+    empirical comparison (just run python msort.py):
+
+    n=  1000 mergesorted0 0.011 secs    mergesorted1 0.003 secs Equal
+    n=  2000 mergesorted0 0.033 secs    mergesorted1 0.005 secs Equal
+    n=  4000 mergesorted0 0.121 secs    mergesorted1 0.012 secs Equal
+    n=  8000 mergesorted0 0.552 secs    mergesorted1 0.025 secs Equal
+    n= 16000 mergesorted0 2.560 secs    mergesorted1 0.053 secs Equal
+
+    Clearly, v0 scales ~n^2 while v1 scales ~n (note that nlogn is almost linear; empirically, it's not hard to distinguish O(n) vs. O(nlogn)).
+
+2. number of inversions (see inversions.py)
+
+    based on v1 of mergesort above.
+    a common mistake from students is to +1 instead of +(remaining of left).
+
+3. longest path (see longest.py)
+
+    some students struggled with how to handle two return values and eventually submit one for the final answer. please refer to the code.
+
+4. BAD longest (see course notes):
+
+    best-case: balanced tree: T(n) = 2T(n/2) + O(n) = O(nlogn)
+    worst-case: linear chain: T(n) = T(n-1)  + O(n) = O(n^2)
+
+    in either case, it's not the O(n) time we wanted.
+    some students submitted this version initially and got Time Limit Exceeded.

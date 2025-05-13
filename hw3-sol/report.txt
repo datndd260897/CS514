@@ -1,0 +1,102 @@
+Algorithms, HW3 Solutions
+
+Q0 (PQ implementations). 
+
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+|              | (a) binary heap | (b) sorted array | (c) unsorted array | (d) sorted linkedlist | (e) inv-sorted array |
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+| (1) push     | O(logn)         | O(n)             | amortized O(1)     | O(n)                  | O(n)                 |
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+| (2) pop-min  | O(logn)         | O(n)             | O(n)               | O(1)                  | amortized O(1)       |
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+| (3) peek-min | O(1)            | O(1)             | O(n) **            | O(1)                  | O(1)                 |
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+| (4) build    | O(n)            | O(nlogn) ***     | O(n)               | O(nlogn) ***          | O(nlogn) ***         |
+|--------------+-----------------+------------------+--------------------+-----------------------+----------------------|
+
+Note: (b) the first element has the highest priority; (e) the first element has the lowest priority.
+ ** if you further keep track of the min position, then peek-min would be O(1). 
+    remember to update that min position in push (still O(1)) and pop-min (still O(n)).
+*** the input list is unsorted, so you need to sort it to make a priority queue.
+
+
+See also:
+https://www.cs.cmu.edu/~adamchik/15-121/lectures/Binary%20Heaps/heaps.html
+http://cs.lmu.edu/~ray/notes/pqueues/
+
+
+Q1 (heapify analysis).
+
+See course notes (updated). This analysis is not required, but you need to know the result and the high-level intuitions:
+
+- heapify is faster because the vast majority (lower levels) requires very little or no work (bubble-down to the leaves); in fact, half of the nodes have 0 work;
+- while heappush one by one is slower because the majority requires the most work (bubble-up all the way to the root); in fact, half of the nodes have $O(\log n)$ work.
+
+
+You also need to understand these two pseudocodes of heapify and their corresponding tree traversal orders:
+
+def heapify(heap, i=0): # top-down (divide-n-conquer): post-order traversal
+    if 2*i+1 >= n: # leaf node?
+        return 
+    heapify(heap, 2*i+1) # heapify left tree
+    heapify(heap, 2*i+2) # heapify right tree
+    bubbledown(heap, i) # adjust root
+
+def heapify2(h): # bottom-up: reverse level-order traversal
+    for i in range(len(h)//2-1, -1, -1): # downto 0
+        bubbledown(h, i)
+
+
+Besides theoretical analysis, you also need to see the empirical difference (code included; try it!):
+
+$ python3 test_heapify.py
+n=    10000 heapify: 0.0003  n heappushes: 0.0027 ratio: 9.96
+n=    20000 heapify: 0.0005  n heappushes: 0.0061 ratio: 11.27
+n=    40000 heapify: 0.0010  n heappushes: 0.0110 ratio: 10.88
+n=    80000 heapify: 0.0020  n heappushes: 0.0216 ratio: 10.60
+n=   160000 heapify: 0.0036  n heappushes: 0.0446 ratio: 12.28
+n=   320000 heapify: 0.0074  n heappushes: 0.0923 ratio: 12.47
+n=   640000 heapify: 0.0147  n heappushes: 0.1955 ratio: 13.27
+n=  1280000 heapify: 0.0297  n heappushes: 0.4053 ratio: 13.64
+n=  2560000 heapify: 0.0583  n heappushes: 0.8430 ratio: 14.46
+
+You can see the huge difference: heapify is a lot faster, and as n grows, its advantage is bigger (n vs. nlogn).
+
+
+Q2 (kmergesort). 
+
+Always O(nlogn) regardless of k. Please refer to the Course Notes for analysis.
+
+Note: heapq.merge() is exactly what we wanted: merging several sorted lists, but we should implement it in HW3.
+
+Q3 (nbest). 
+
+(a) O(n^2 + n^2 log n^2 + n) = O(n^2 logn)
+(b) O(n^2 + n^2 + n^2) = O(n^2)
+(c) I've supplied two quite different solutions:
+
+    standard solution (from the top-left corner):
+    O(2nlogn + nlogn + 2nlogn) = O(nlogn) (sort a and b, n pops, 2n pushes; heapsize bounded by n)    
+
+    alternative (asymmetric) solution (sort a, but not b, start from the first column; heapsize always n):
+    O(nlogn + nlogn) = O(nlogn)   ------- see nbestc2() in nbest.py
+
+    advantages of the alternative solution:
+    1) only sort one array 
+    2) always one pop and one push (instead of two pushes), so heapreplace can apply
+    3) no need to keep track of used (i, j) pairs
+
+    relative importance: 3) > 2) > 1)
+
+    advantages of the standard solution:
+    1) symmetric between a and b (aesthetic reason)
+    2) heapsize is smaller: starts with 1, then 2, ... at most n 
+       [advanced] average case heap size is \sqrt(2n), but same worst case size (n)
+    3) works for lazy lists
+
+
+Q4 (datastream). 
+
+O(k + nlogk) = O(nlogk)
+
+

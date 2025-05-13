@@ -1,0 +1,76 @@
+HW5 Solutions
+-------------
+
+0. Is Fibonacci REALLY O(n)?
+
+   Not really, since f(n) = O(1.618...^n) itself grows exponentially, and Python high-precision math needs more than O(1) time to add two large numbers. Since each f(n)=O(1.618...^n), the number of bits to encode it (in any base) is log(1.618...^n) = O(n), so each addition takes O(n) time. So computing f(n) takes O(n^2) time. But you can only see this scaling for bigger n's.
+
+   Practically, you can print the runtime to confirm this:
+
+   n:    4096 base10-digits:    856 time:  0.000468
+   n:    8192 base10-digits:   1712 time:  0.001572
+   n:   16384 base10-digits:   3424 time:  0.005245
+   n:   32768 base10-digits:   6848 time:  0.017311
+   n:   65536 base10-digits:  13696 time:  0.063903
+   n:  131072 base10-digits:  27393 time:  0.238554
+   n:  262144 base10-digits:  54785 time:  0.929804
+   n:  524288 base10-digits: 109570 time:  3.672851
+   n: 1048576 base10-digits: 219140 time: 14.565167
+
+   As you can see, when we double our n, the number of digits for f(n) doubles (so O(n)), but the time quadruples (so O(n^2)).
+
+See fib.py for timing.
+
+1. Max Weighted Independent Set:
+   
+   O(n) time
+
+   I included several version:
+   a) top-down
+   b) bottom-up
+   c) saving best subsolutions instead of backtracking -- O(n^2) time!
+
+   The most important part is backtracking to recover the best solution.
+   There are several ways of doing that (they can work for both top-down & bottom-up):
+
+   # method 0: recursive, +; BAD: O(n^2) time!
+   def solution(i, a, back): # recursive backtracing
+      if i < 0:
+        return []
+      # BAD: this ... + [a[i]] below is O(n) time!
+      return solution(i-1, a, back) if back[i] else (solution(i-2, a, back) + [a[i]])
+
+   # method 1: recursive, __iadd__; good: O(n) time
+   def solution(i, a, back): # recursive backtracing
+      if i < 0:
+        return []
+      # use __iadd__ (+=) to ensure O(1) time
+      return solutionb(i-1, a, back) if back[i] else solutionb(i-2, a, back).__iadd__([a[i]])
+
+   # method 2: loop, reverse
+   def solution2(a, back): # non-recursive
+     sol = []
+     i = len(a)-1
+     while i >= 0: # backward from n-1
+       if not back[i]: # take
+         sol.append(a[i])
+         i -= 2
+       else:
+         i -= 1         
+     return sol[::-1] # reverse the order
+
+   You should play with these methods to see the runtime differences (python mis.py)
+
+2. Number of BSTs:
+
+   B(n) = \sum_{i=1~n} B(i-1) * B(n-i)
+
+   O(n^2) time
+   Catalan series:
+   https://en.wikipedia.org/wiki/Catalan_number
+
+   This interesting series has so many interpretations, including the # of BSTs.
+   
+3. Number of bitstrings:
+
+   O(n) time (ignoring high-precision math)
