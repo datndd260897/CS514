@@ -66,15 +66,15 @@ def nbestc2(a, b): # alternative (asymmetric) solution from (0, j) for all j
     return result
 
 if __name__ == "__main__":
-    a, b = [4,1,5,3], [2,6,3,4]
-    print(nbesta(a,b))
-    print(nbestb(a,b))
+    a, b = [4,1,5,3], [4, 2,6,3]
+    # print(nbesta(a,b))
+    # print(nbestb(a,b))
     print(nbestc(a,b))
-    print(nbestc2(a,b))
+    # print(nbestc2(a,b))
 
-    print()
-    a, b = [4,1,5,3], [4,0,5,7]
-    print(nbesta(a,b))
-    print(nbestb(a,b))
-    print(nbestc(a,b))
-    print(nbestc2(a,b))
+    # print()
+    # a, b = [4,1,5,3], [4,0,5,7]
+    # print(nbesta(a,b))
+    # print(nbestb(a,b))
+    # print(nbestc(a,b))
+    # print(nbestc2(a,b))

@@ -10,3 +10,7 @@ print(num_no(3))
 print(num_no(1))
 print(num_no(0))
 print(num_yes(3))
+print(num_no(5))
+print(num_yes(5))
+
+

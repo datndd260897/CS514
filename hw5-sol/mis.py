@@ -38,12 +38,14 @@ def solution1(i, a, back): # recursive backtracing; good: O(n) time
 def solution2(_, a, back): # non-recursive; loop+reverse; O(n) time
     sol = []
     i = len(a)-1
+    print(back)
     while i >= 0: # backward from n-1
         if not back[i]: # take
             sol.append(a[i])
             i -= 2
         else:
-            i -= 1         
+            i -= 1
+    print(back)
     return sol[::-1] # reverse the order
 
 solution = solution1
@@ -71,45 +73,48 @@ def max_wis5(a): # O(n) but wrong! (try [9,10,9,2,1,3])
 
 if __name__ == "__main__":
 
-    print(max_wis5([9,10,9,2,1,3]))
+    # print(max_wis5([9,10,9,2,1,3]))
+    print(max_wis([9,10,9,2,1,3]))
+    print(max_wis2([9,10,9,2,1,3]))
+    print(max_wis4([9, 10, 9, 2, 1, 3]))
     exit()
 
-    import sys, random
-    sys.setrecursionlimit(1000000)
-
-    example = [9, 10, 8, 5, 2, 4]
-    print(max_wis2(example))
-
-    #lst = [random.randint(-1e5,1e5) for _ in range(20000)]
-
-    from time import time
-    for n in [2500, 5000, 10000, 20000]: #, 10000000, 100000000]:
-        a = [random.randint(-1e5,1e5) for _ in range(n)]
-        t = time()
-        solution = solution0
-        sol1 = max_wis2(a)
-        time1 = time() - t
-
-        solution = solution1
-        t = time()
-        sol2 = max_wis2(a)
-        time2 = time() - t
-        
-        solution = solution2
-        t = time()
-        sol3 = max_wis2(a)
-        time3 = time() - t
-        
-        t = time()
-        sol4 = max_wis4(a) # O(n^2)
-        time4 = time() - t
-       
-        t = time()
-        solution = solution2
-        sol5 = max_wis(a) # top-down
-        time5 = time() - t
-        print("%6d %.3f %.3f %.3f %.3f %.3f" % (n, time1, time2, time3, time4, time5), 
-              sol1 == sol2 == sol3 == sol4 == sol5)
+    # import sys, random
+    # sys.setrecursionlimit(1000000)
+    #
+    # example = [9, 10, 8, 5, 2, 4]
+    # print(max_wis2(example))
+    #
+    # #lst = [random.randint(-1e5,1e5) for _ in range(20000)]
+    #
+    # from time import time
+    # for n in [2500, 5000, 10000, 20000]: #, 10000000, 100000000]:
+    #     a = [random.randint(-1e5,1e5) for _ in range(n)]
+    #     t = time()
+    #     solution = solution0
+    #     sol1 = max_wis2(a)
+    #     time1 = time() - t
+    #
+    #     solution = solution1
+    #     t = time()
+    #     sol2 = max_wis2(a)
+    #     time2 = time() - t
+    #
+    #     solution = solution2
+    #     t = time()
+    #     sol3 = max_wis2(a)
+    #     time3 = time() - t
+    #
+    #     t = time()
+    #     sol4 = max_wis4(a) # O(n^2)
+    #     time4 = time() - t
+    #
+    #     t = time()
+    #     solution = solution2
+    #     sol5 = max_wis(a) # top-down
+    #     time5 = time() - t
+    #     print("%6d %.3f %.3f %.3f %.3f %.3f" % (n, time1, time2, time3, time4, time5),
+    #           sol1 == sol2 == sol3 == sol4 == sol5)
         
     # t = time()
     # a = max_wis(lst)
