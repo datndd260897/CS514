@@ -14,6 +14,8 @@ def smallest(X, v):
                 if coins < best[x]:
                     best[x] = coins
                     back[x] = index
+            else:
+                return 0
         return best[x]
     return _dp(X), solution2(X, back, v)
 
@@ -49,6 +51,7 @@ def smallest_bottom_up(amount, coins):
 
 
 print(smallest(6, [1,5]))
+print(smallest(1, [2]))
 print(smallest(6, [1,3,4]))
 print(smallest(87, [1,5,10,25]))
 print(smallest_bottom_up(87, [1,5,10,25]))
