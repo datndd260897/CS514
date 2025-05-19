@@ -1,0 +1,92 @@
+HW6 reference solutions
+
+1. Unbounded Knapsack
+    (a) Greedy Solution:
+        1) For a bag with weight w and n items, choose the item (w_i, v_i) (w >= w_i)
+        which has the maximum unit value (v_i/w_i). If there is no item to choose, stop.
+        2) w -= w_i; repeat.
+
+    (b) Counter example: (6, [(2, 7), (5, 20)])
+        The unit value are (3.5, 4). The greedy algorithm chooses (5, 20) first.
+        Now w = 6-5 = 1.
+        Then no items can be put into the bag.
+        So the result is (20, [0, 1]).
+        However, the correct answer is (21, [3, 0]).
+
+    (c) Define subproblem:
+        OPT(w) = the maximum value for weight limit w (0 <= w <= W)
+        Goal: OPT(W)
+
+    (d) Recurrence relations:
+        OPT(w) = max_{i=1~n, w_i<=w} [OPT(w - w_i) + v_i]
+
+    (e) Base cases:
+        OPT(w) = 0, w < min(w1,...,wn)
+
+        It's actually easier to set the default value for any OPT[w] to be 0 using defaultdict.
+
+        >>> from collections import defaultdict
+        >>> opt = defaultdict(int)
+        >>> opt[0]
+        0
+
+    (f) Complexity:
+        Space complexity: O(W); There are O(W) subproblems (table entries) in OPT.
+        Time complexity: O(Wn); There are O(W) subproblems, and each takes O(n) time.
+
+2. Bounded Knapsack
+    (a) Greedy solution:
+        1) For A Bag of w and n items, choose the item (w_i, v_i, c_i) which has the maximum unit value
+        (v_i/w_i) and the weight w_i should be not more than the bag's weight and c_i is bigger than zero.
+        2) If all the items' weight are bigger than the bag or all the items have been used, stop the algorithm.
+        Otherwise, w -= w_i, c_i -= 1. repeat the steps 1) and 2).
+
+    (b) Counter example: (12, [(4, 11, 3), (10, 30, 1)])
+        The unit value are (2.75, 3). The greedy algorithm chooses (10, 30, 1)
+        Then the bag's remaining weight is 2 and no items can be put into the bag.
+        So the result is (30, [0, 1]).
+        However, the correct answer is (33, [3, 0]).
+
+    (c) Define subproblem:
+        OPT(w, i) = the maximum value for the first i items (1~i) with weight limit w.
+        Goal: OPT(W, n)
+
+    (d) Recurrence relations:
+        OPT(w, i) = max_{j=0~min{c_i, w//w_i}} [OPT(w - j * w_i, i-1) + j * v_i]
+
+    (e) Base cases:
+        OPT(w, 0) = 0
+        OPT(w, i) = 0, w < min(w_1,...,w_n)
+
+        Again, it’s actually easier to set all initial values to 0 by defaultdict:
+
+        >>> from collections import defaultdict
+        >>> opt = defaultdict(int)
+        >>> opt[0, 0]
+        0
+
+    (f) Complexity:
+        Space complexity: O(Wn); There are O(nW) subproblems (table entries) in OPT.
+        Time complexity:  O(WC) where C = \sum_i c_i.
+
+	Note: for time complexity, most students wrote O(W n c_max) where c_max = max_i c_i.
+	This bound is too crude. Different items have very different c_i's, so taking the maximum to represent all is not tight enough.
+
+        Note: the alternative solution is to convert this problem to 0-1 knapsack by duplication.
+        For that solution: Space: O(WC); Time: O(WC).
+
+        
+Notes on three versions of knapsack:
+
+unbounded (w) + MIS (i) = 0-1 (w, i)
+0-1 (w, i) + unbounded  = bounded (w, i = max_j)
+
+        unbounded: best[w] = max_i ...
+      multiple-choice: take which item? ---+
+      +--------------------------------+   |
+    b |                                |   |
+ M  i |  0-1: best[w, i] = max {., .}  |   |     bounded:  best[w, i] = max_j ...
+ I  n |  binary choice: take i or not? | --+-> multiple-choice: take how many copies of i?
+ S  a |                                | 
+(i) r |                                |
+    y +--------------------------------+
