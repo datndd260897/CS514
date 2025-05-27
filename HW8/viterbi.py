@@ -29,7 +29,7 @@ def order(n, edges):
 def longest(n, edges):
     topo = order(n, edges)
     if topo is None:
-        return None  # just a safety check
+        return None  # safety check
 
     adj = defaultdict(list)
     for u, v in edges:
@@ -38,11 +38,7 @@ def longest(n, edges):
     dist = [-float('inf')] * n
     parent = [None] * n
 
-    # Sources have longest path 0 length
-    for u in topo:
-        if all(u != v for _, v in edges):  # no incoming edges check is O(e)
-            dist[u] = 0
-    # A better way to find sources:
+    # Use indegree array to identify sources (nodes with no incoming edges)
     indegree = [0] * n
     for u, v in edges:
         indegree[v] += 1
@@ -58,16 +54,11 @@ def longest(n, edges):
                 dist[v] = dist[u] + 1
                 parent[v] = u
 
-    # Find max dist and corresponding node
     max_len = max(dist)
     if max_len == -float('inf'):
-        # No paths at all, e.g., empty graph
-        # Return (0, [some node]) or (0, [])
         return (0, [])
 
     end = dist.index(max_len)
-
-    # Reconstruct path
     path = []
     while end is not None:
         path.append(end)
@@ -75,6 +66,7 @@ def longest(n, edges):
     path.reverse()
 
     return (max_len, path)
+
 
 
 print(longest(8, [(0,2), (1,2), (2,3), (2,4), (3,4), (3,5), (4,5), (5,6), (5,7)]))
