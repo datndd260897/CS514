@@ -1,0 +1,25 @@
+
+0. For the following graphs, decide whether they are
+   (1) directed or undirected, (2) dense or sparse, and (3) cyclic or acyclic:
+
+   (a) Facebook -> undirected, sparse, cyclic
+   (b) Twitter -> directed, sparse, cyclic
+   (c) a family -> directed, dense, acyclic
+   (d) V=airports, E=direct_flights -> directed, sparse, cyclic
+   (e) a mesh -> undirected, sparse, cyclic
+   (f) V=courses, E=prerequisites -> directed, sparse, acyclic
+   (g) a tree -> directed, sparse, acyclic
+   (h) V=linux_software_packages, E=dependencies -> directed, sparse, acyclic
+   (i) DP subproblems for 0-1 knapsack -> directed, sparse, acyclic
+
+   Can you name a very big dense graph? Neural network graphs, Completed graph
+
+questions:
+   (a) did you realize that bottom-up implementations of DP use (explicit) topological orderings?
+   Yes, bottom-up DP inherently uses an explicit or implicit topological ordering of the states.
+       e.g., what is the topological ordering in your (or my) bottom-up bounded knapsack code?
+   The states can be thought of as (item_index, capacity_left)
+   (b) what about top-down implementations of DP? what order do they use to traverse the graph?
+   Top-down DP (memoized recursion) uses a demand-driven DFS traversal of the state graph.
+   The order of traversal is determined by the recursion call order, which may be arbitrary depending on the problem. However, memoization ensures each state is computed exactly once, so the recursion stack acts like an implicit topological ordering.
+
