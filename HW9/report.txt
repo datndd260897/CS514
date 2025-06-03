@@ -1,0 +1,21 @@
+Q: What if you only have heapq, can you still make Dijkstra work (with the built-in heapq)?
+      Can you re-analyze the time/space complexities?
+      Yes, Dijkstra can still be implemented using Python’s built-in heapq—but you’ll need a workaround because heapq lacks a decrease-key operation.
+      Time complexities: O(mlogn)
+
+   Q: Is Dijkstra a greedy algorithm or dynamic programming algorithm?
+      Most textbooks (such as KT and CLRS) classify it as a greedy algorithm,
+      but some people have different opinions, e.g.:
+
+      (a) https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Dynamic_programming_perspective
+      (b) Dijkstra's algorithm revisited: the dynamic programming connexion, by M. Sniedovich (2006):
+      http://matwbn.icm.edu.pl/ksiazki/cc/cc35/cc3536.pdf
+      (c) https://www.quora.com/Is-Dijkstras-Algorithm-a-greedy-algorithm-or-a-dynamic-programming-algorithm
+      (d) https://aclanthology.org/C08-5001.pdf
+
+      What do you think?
+      Greedy but with a little bit DP
+
+   Q: for problems that can be solved by both Dijkstra and Viterbi, which one is faster? Hint: think about coins.
+   Dijkstra
+
