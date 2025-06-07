@@ -1,0 +1,19 @@
+
+Debriefing (required!): --------------------------
+
+0. What's your name?
+Dat
+1. Approximately how many hours did you spend on this assignment?
+36
+2. Would you rate it as easy, moderate, or difficult?
+difficult
+3. Did you work on it mostly alone, or mostly with other people?
+alone
+4. How deeply do you feel you understand the material it covers (0%-100%)?
+80%
+5. Any other comments?
+
+This section is intended to help us calibrate the homework assignments.
+Your answers to this section will *not* affect your grade; however, skipping it
+will certainly do.
+N/A
